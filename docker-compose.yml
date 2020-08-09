@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+    sonarqube:
+        image: sonarqube
+        ports:
+            - "9000:9000"
+    gitlab:
+        image: gitlab/gitlab-ce:latest
+        environment:
+            GITLAB_OMNIBUS_CONFIG: |
+                gitlab_rails['initial_root_password'] = 'adminadmin'
+            #gitlab_rails['initial_root_email'] = 'adminadmin@email.com'
+            #GITLAB_ROOT_PASSWORD: "admin"
+            #GITLAB_ROOT_EMAIL: "hello@world.com"
+        ports:
+            - "10080:80"
+            - "10443:443"
+            - "10022:22"
+    runner:
+        build:
+            context: .
+            dockerfile: runner-dockerfile
+#       image: centos:8
+#       ports:
+#           - "20022:22"
+    registry:
+        image: registry:2
+        ports:
+            - "35000:5000"
+    jenkins:
+        image: jenkins/jenkins:lts
+        ports:
+            - "58080:8080"
+            - "50000:50000" 
+# bump
