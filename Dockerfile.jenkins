@@ -1,4 +1,14 @@
 FROM jenkins/jenkins:lts
 # Help from https://docs.cloudbees.com/docs/cloudbees-jenkins-distribution/latest/distro-admin-guide/customize-in-docker
 COPY jenkins.plugins /usr/share/jenkins/plugins.txt
+COPY jenkins.configurationascode /var/jenkins_home/jenkins_casc.yaml
+ADD https://deb.nodesource.com/setup_14.x /nodejs.script
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
+USER root
+# learned safe path for configuration as code file placement from here
+# https://plugins.jenkins.io/configuration-as-code/
+#RUN chown jenkins:jenkins /var/jenkins_home/jenkins_casc.yaml
+RUN chmod +x /nodejs.script && \
+    (cd /; ./nodejs.script) && \
+    apt-get install -y nodejs && \
+    npm install snyk
