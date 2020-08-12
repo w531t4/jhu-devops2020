@@ -13,8 +13,8 @@ services:
                 gitlab_rails['initial_root_password'] = 'adminadmin'
                 gitlab_rails['registry_enabled'] = true
                 gitlab_rails['registry_host'] = 'localhost'
-                gitlab_rails['registry_port'] = '5000'
-                gitlab_rails['registry_api_url'] = 'http://my_registry:5000/'
+                gitlab_rails['registry_port'] = '35000'
+                gitlab_rails['registry_api_url'] = 'http://localhost:35000/'
             #gitlab_rails['initial_root_email'] = 'adminadmin@email.com'
             #GITLAB_ROOT_PASSWORD: "admin"
             #GITLAB_ROOT_EMAIL: "hello@world.com"
@@ -23,28 +23,38 @@ services:
             - "10443:443"
             - "10022:22"
         networks:
-            - frontend
+            - bridge
 #    runner:
+        #https://www.ikus-soft.com/en/blog/2018-05-23-how-to-setup-gitlab-cicd/
 #        build:
 #            context: .
 #            dockerfile: runner-dockerfile
-##       image: centos:8
-##       ports:
-##           - "20022:22"
+#       image: centos:8
+#       ports:
+#           - "20022:22"
     registry:
         image: registry:2
         container_name: my_registry
         ports:
             - "35000:5000"
         networks:
-            - frontend
-#    jenkins:
-#        image: jenkins/jenkins:lts
-#        ports:
-#            - "58080:8080"
-#            - "50000:50000" 
-        
-# bump2
+            - bridge
+    jenkins:
+        build:
+            context: .
+            dockerfile: Dockerfile.jenkins
+        environment:
+            # from https://stackoverflow.com/questions/44727535/jenkins-docker-set-admin-password-from-environment-variable
+            JAVA_OPTS: -Djenkins.install.runSetupWizard=false
+            JENKINS_OPTS: --argumentsRealm.roles.user=root --argumentsRealm.passwd.admin=adminadmin --argumentsRealm.roles.admin=admin
+        ports:
+            - "58080:8080"
+            - "50000:50000" 
+        networks:
+            - bridge
+
+#    snyk:
+#        image: snyk/snyk-cli
 #https://docs.docker.com/compose/networking/
 #
 # needed to issue the following in order to get inter-container communication functioning on fedora-latest-stable
@@ -52,6 +62,8 @@ services:
 #sysctl net.bridge.bridge-nf-call-iptables=0
 #sysctl net.bridge.bridge-nf-call-arptables=0
 #sysctl net.bridge.bridge-nf-call-ip6tables=0
+#sysctl net.ipv4.ip_forward=1
+#also had to turn off firewalld 
 networks:
-  frontend:
+  bridge:
     driver: bridge

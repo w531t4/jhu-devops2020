@@ -1,3 +1,0 @@
-FROM centos:8
-ADD https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm /
-RUN dnf -y localinstall /gitlab-runner_amd64.rpm

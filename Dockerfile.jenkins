@@ -1,0 +1,4 @@
+FROM jenkins/jenkins:lts
+# Help from https://docs.cloudbees.com/docs/cloudbees-jenkins-distribution/latest/distro-admin-guide/customize-in-docker
+COPY jenkins.plugins /usr/share/jenkins/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
