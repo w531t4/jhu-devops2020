@@ -52,18 +52,22 @@ services:
             # from https://stackoverflow.com/questions/44727535/jenkins-docker-set-admin-password-from-environment-variable
             JAVA_OPTS: -Djenkins.install.runSetupWizard=false
             JENKINS_OPTS: --argumentsRealm.roles.user=root --argumentsRealm.passwd.admin=adminadmin --argumentsRealm.roles.admin=admin
-            SNYK_API_KEY: ${API_KEY}
+            #SNYK_API_KEY: ${API_KEY}
         ports:
             - "58080:8080"
             - "50000:50000" 
         networks:
             - bridge
-        #volumes:
+        volumes:
             # found docker-in-docker must-haves here
             # https://medium.com/swlh/quickstart-ci-with-jenkins-and-docker-in-docker-c3f7174ee9ff
-            #- /var/run/docker.sock:/var/run/docker.sock
-            #- /usr/bin/docker:/usr/bin/docker
-
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /usr/bin/docker:/usr/bin/docker
+    snyk:
+        image: snyk/snyk-cli:docker
+        networks:
+            - bridge
+                
 #https://docs.docker.com/compose/networking/
 #
 

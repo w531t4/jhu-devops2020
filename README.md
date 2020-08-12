@@ -3,7 +3,7 @@ to build the project, run
 REQUIREMENTS:
     docker
     must disable firewalld
-    # must disable selinux enforcing (due to /var/run/docker.sock)
+    ! must disable selinux enforcing (due to /var/run/docker.sock)
     # needed to issue the following in order to get inter-container
     # communication functioning on fedora-latest-stable
 
@@ -34,3 +34,7 @@ Logging into docker
 
     Login Succeeded
     [root@otherbarry proj]# 
+
+Running Snyk via docker
+
+    docker run -it -e "SNYK_TOKEN=token"  -e "MONITOR=true" -v "test:/project" -v "/var/run/docker.sock:/var/run/docker.sock" snyk/snyk-cli:docker test --docker registry:2
