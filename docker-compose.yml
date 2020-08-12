@@ -1,18 +1,20 @@
 version: '3.4'
 services:
-    sonarqube:
-        image: sonarqube
-        ports:
-            - "9000:9000"
+#    sonarqube:
+#        image: sonarqube
+#        ports:
+#            - "9000:9000"
     gitlab:
         image: gitlab/gitlab-ce:latest
         container_name: my_gitlab
         environment:
+        #http://localhost:10080/help/administration/packages/container_registry.md
             GITLAB_OMNIBUS_CONFIG: |
                 gitlab_rails['initial_root_password'] = 'adminadmin'
                 gitlab_rails['registry_enabled'] = true
-                gitlab_rails['registry_host'] = 'my_registry'
-                gitlab_rails['registry_port'] = '5000'                
+                gitlab_rails['registry_host'] = 'localhost'
+                gitlab_rails['registry_port'] = '5000'
+                gitlab_rails['registry_api_url'] = 'http://my_registry:5000/'
             #gitlab_rails['initial_root_email'] = 'adminadmin@email.com'
             #GITLAB_ROOT_PASSWORD: "admin"
             #GITLAB_ROOT_EMAIL: "hello@world.com"
@@ -22,13 +24,13 @@ services:
             - "10022:22"
         networks:
             - frontend
-    runner:
-        build:
-            context: .
-            dockerfile: runner-dockerfile
-#       image: centos:8
-#       ports:
-#           - "20022:22"
+#    runner:
+#        build:
+#            context: .
+#            dockerfile: runner-dockerfile
+##       image: centos:8
+##       ports:
+##           - "20022:22"
     registry:
         image: registry:2
         container_name: my_registry
@@ -36,11 +38,11 @@ services:
             - "35000:5000"
         networks:
             - frontend
-    jenkins:
-        image: jenkins/jenkins:lts
-        ports:
-            - "58080:8080"
-            - "50000:50000" 
+#    jenkins:
+#        image: jenkins/jenkins:lts
+#        ports:
+#            - "58080:8080"
+#            - "50000:50000" 
         
 # bump2
 #https://docs.docker.com/compose/networking/
