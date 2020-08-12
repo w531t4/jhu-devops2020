@@ -1,10 +1,12 @@
 to build the project, run
 
-docker-compose up -d
-
 REQUIREMENTS:
     docker
 
+RUNNING:
+
+    docker-compose up --build
+    docker-compose down --remove-orphans
 
 INSTRUCTIONS:
 
