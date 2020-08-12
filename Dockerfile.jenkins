@@ -13,7 +13,7 @@ USER root
 #    (cd /; ./nodejs.script) && \
 #    apt-get install -y nodejs && \
 #    npm install snyk
-#USER jenkins
+USER jenkins
 #commenting this out for now - this causes issues because it writes to /var/jenkins_home/config/snyk/,
 #which is inside a volume /var/jenkins_home, therefore the changes aren't captured by docker on build
 #RUN echo api-key=$API_KEY && \

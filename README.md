@@ -13,6 +13,8 @@ REQUIREMENTS:
     #sysctl net.bridge.bridge-nf-call-arptables=0
     #sysctl net.bridge.bridge-nf-call-ip6tables=0
     #sysctl net.ipv4.ip_forward=1
+    TEMPORARILY set /var/run/docker.sock to 777 (sigh)
+    # srw-rw----. 1 root docker 0 Aug 12 08:50 /var/run/docker.sock <--- original privs
 
     Need to get API key for Snyk from https://app.snyk.io/account (once authenticated click dialog towards top of screen that says 'click to show')
 
