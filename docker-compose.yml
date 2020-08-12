@@ -43,6 +43,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile.jenkins
+            args:
+                API_KEY: ${API_KEY}
         environment:
             # found CASC_JENKINS_CONFIG env var here
             # https://codebabel.com/jcasc-stateless-ci/
@@ -50,6 +52,7 @@ services:
             # from https://stackoverflow.com/questions/44727535/jenkins-docker-set-admin-password-from-environment-variable
             JAVA_OPTS: -Djenkins.install.runSetupWizard=false
             JENKINS_OPTS: --argumentsRealm.roles.user=root --argumentsRealm.passwd.admin=adminadmin --argumentsRealm.roles.admin=admin
+            SNYK_API_KEY: ${API_KEY}
         ports:
             - "58080:8080"
             - "50000:50000" 

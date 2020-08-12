@@ -44,3 +44,14 @@ unclassified:
     adminAddress: "address not configured yet <nobody@nowhere>"
   pollSCM:
     pollingThreadCount: 10
+tool:
+  snyk:
+    installations:
+    - home: "/node_modules/.bin/"
+      name: "snyk"
+      properties:
+      - installSource:
+          installers:
+          - command:
+              command: "snyk auth ^${SNYK_API_KEY}"
+              toolHome: "/node_modules/.bin/"

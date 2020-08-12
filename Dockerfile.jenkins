@@ -8,7 +8,13 @@ USER root
 # learned safe path for configuration as code file placement from here
 # https://plugins.jenkins.io/configuration-as-code/
 #RUN chown jenkins:jenkins /var/jenkins_home/jenkins_casc.yaml
+ARG API_KEY
 RUN chmod +x /nodejs.script && \
     (cd /; ./nodejs.script) && \
     apt-get install -y nodejs && \
     npm install snyk
+USER jenkins
+#commenting this out for now - this causes issues because it writes to /var/jenkins_home/config/snyk/,
+#which is inside a volume /var/jenkins_home, therefore the changes aren't captured by docker on build
+#RUN echo api-key=$API_KEY && \
+#    /node_modules/.bin/snyk auth ${API_KEY}

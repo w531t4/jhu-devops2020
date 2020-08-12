@@ -14,9 +14,11 @@ REQUIREMENTS:
     #sysctl net.bridge.bridge-nf-call-ip6tables=0
     #sysctl net.ipv4.ip_forward=1
 
+    Need to get API key for Snyk from https://app.snyk.io/account (once authenticated click dialog towards top of screen that says 'click to show')
+
 RUNNING:
 
-    docker-compose up --build
+    API_KEY="API key from the requirements above" docker-compose up --build
     docker-compose down --remove-orphans
 
 INSTRUCTIONS:
