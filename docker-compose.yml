@@ -73,5 +73,11 @@ services:
 
 #https://docs.docker.com/compose/networking/
 networks:
-  bridge:
-    driver: bridge
+    bridge:
+        # gitlab can't send outbound webhooks to private addresses without setting a configuration value
+        # that i can't figure out how to toggle automatically. Therefore, we're taking the liberty of
+        # redefining 1.0.0.0/24.
+        ipam:
+            driver: default
+            config:
+                - subnet: 1.0.0.0/24
