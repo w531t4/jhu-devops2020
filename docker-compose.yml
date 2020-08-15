@@ -15,9 +15,7 @@ services:
                 gitlab_rails['registry_host'] = 'localhost'
                 gitlab_rails['registry_port'] = '35000'
                 gitlab_rails['registry_api_url'] = 'http://my_registry:5000/'
-            #gitlab_rails['initial_root_email'] = 'adminadmin@email.com'
-            #GITLAB_ROOT_PASSWORD: "admin"
-            #GITLAB_ROOT_EMAIL: "hello@world.com"
+                gitlab_rails['initial_shared_runners_registration_token'] = "token"
         ports:
             - "10080:80"
             - "10443:443"

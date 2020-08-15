@@ -40,3 +40,15 @@ Logging into docker
 Running Snyk via docker
 
     docker run -it -e "SNYK_TOKEN=token"  -e "MONITOR=true" -v "test:/project" -v "/var/run/docker.sock:/var/run/docker.sock" snyk/snyk-cli:docker test --docker registry:2
+
+Pushing docker image into Gitlab Repo
+    docker login 
+    docker tag centos:8 localhost:35000/root/testing1234:blah
+    docker push localhost:35000/root/testing1234:blah
+
+REFERENCES
+gitlab bootstrap
+    https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
+
+registry config alterations
+    https://docs.docker.com/registry/configuration/
