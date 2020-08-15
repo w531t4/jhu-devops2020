@@ -51,6 +51,7 @@ unclassified:
     - "jobBuildDiscarder"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "http://my_jenkins:8080/"
   pollSCM:
     pollingThreadCount: 10
 tool:
