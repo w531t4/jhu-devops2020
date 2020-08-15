@@ -33,7 +33,9 @@ services:
 #       ports:
 #           - "20022:22"
     registry:
-        image: registry:2
+        build:
+            context: .
+            dockerfile: Dockerfile.registry
         container_name: my_registry
         ports:
             - "35000:5000"

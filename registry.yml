@@ -1,0 +1,47 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: inmemory
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+notifications:
+    endpoints:
+        - name: alistener
+          disabled: false
+          url: "http://my_jenkins:8080/generic-webhook-trigger/invoke"
+          #url: "http://my_jenkins:8080/dockerregistry-webhook/notify"
+          #url: "http://my_jenkins:8080/project/test"
+          timeout: 500ms
+          threshold: 5
+          backoff: 1s
+
+# Example success
+#4h.....PPOST /project/test HTTP/1.1
+#Content-Type: application/json
+#X-Gitlab-Event: Push Hook
+#Connection: close
+#Host: my_jenkins:8080
+#Content-Length: 1705
+
+#example failure
+
+#..tdN..&POST /project/test HTTP/1.1
+#Host: my_jenkins:8080
+#User-Agent: Go-http-client/1.1
+#Content-Length: 1136
+#Content-Type: application/vnd.docker.distribution.events.v1+json
+#Accept-Encoding: gzip
+
+          
